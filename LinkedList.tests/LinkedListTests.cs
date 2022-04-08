@@ -108,6 +108,28 @@ namespace MyLinkedList.tests
             int actual = list.GetFirstIndexByValue(value);
             Assert.AreEqual(expected, actual);
         }
+        [TestCaseSource(typeof(GetFirstIndexByValueNegativeTestSource))]
+        public void GetFirstIndexByValueNegativeTest(LinkedList list, int expected, int value)
+        {
+            Assert.Throws<Exception>(() => list.GetFirstIndexByValue(value));
+        }
+
+        [TestCaseSource(typeof(ChangeNodeByIndexTestSource))]
+        public void ChangeNodeByIndexTest(LinkedList list, LinkedList expected, int value, int index)
+        {
+            list.ChangeNodeByIndex(index, value);
+            Assert.AreEqual(expected, list);
+        }
+        [TestCaseSource(typeof(ChangeNodeByIndexNegativeTestSource))]
+        public void ChangeNodeByIndexNegativeTest(LinkedList list, int value, int index)
+        {
+            Assert.Throws<Exception>(() => list.ChangeNodeByIndex(value, index));
+        }
+        [TestCaseSource(typeof(ChangeNodeByIndexNegativeTestSource_WhenIndexOut))]
+        public void ChangeNodeByIndexNegativeTest_WhenIndexOut(LinkedList list, int index, int value)
+        {
+            Assert.Throws<IndexOutOfRangeException>(() => list.ChangeNodeByIndex(index, value));
+        }
 
         [TestCaseSource(typeof(ReverseTestSource))]
         public void ReverseTest(LinkedList list, LinkedList expected)
@@ -115,7 +137,11 @@ namespace MyLinkedList.tests
             list.Reverse();
             Assert.AreEqual(expected, list);
         }
-
+        [TestCaseSource(typeof(ReverseNegativeTestSource))]
+        public void ReverseNegativeTest(LinkedList list)
+        {
+            Assert.Throws<Exception>(() => list.Reverse());
+        }
 
         [TestCaseSource(typeof(FindMaxTestSource))]
         public void FindMaxTest(LinkedList list, int expected)
@@ -123,11 +149,22 @@ namespace MyLinkedList.tests
             int actual = list.FindMax();
             Assert.AreEqual(expected, actual);
         }
+
+        [TestCaseSource(typeof(FindMaxNegativeTestSource))]
+        public void FindMaxNegativeTest(LinkedList list)
+        {
+            Assert.Throws<Exception>(() => list.FindMax());
+        }
         [TestCaseSource(typeof(FindMinTestSource))]
         public void FindMinTest(LinkedList list, int expected)
         {
             int actual = list.FindMin();
             Assert.AreEqual(expected, actual);
+        }
+        [TestCaseSource(typeof(FindMinNegativeTestSource))]
+        public void FindMinNegativeTest(LinkedList list)
+        {
+            Assert.Throws<Exception>(() => list.FindMin());
         }
         [TestCaseSource(typeof(FindIndexOfMaxTestSource))]
         public void FindIndexOfMaxTest(LinkedList list, int expected)
@@ -135,18 +172,60 @@ namespace MyLinkedList.tests
             int actual = list.FindIndexOfMax();
             Assert.AreEqual(expected, actual);
         }
+        [TestCaseSource(typeof(FindIndexOfMaxNegativeTestSource))]
+        public void FindIndexOfMaxNegativeTest(LinkedList list)
+        {
+            Assert.Throws<Exception>(() => list.FindIndexOfMax());
+        }
         [TestCaseSource(typeof(FindIndexOfMinTestSource))]
         public void FindIndexOfMinTest(LinkedList list, int expected)
         {
             int actual = list.FindIndexOfMin();
             Assert.AreEqual(expected, actual);
         }
-
+        [TestCaseSource(typeof(FindIndexOfMinNegativeTestSource))]
+        public void FindIndexOfMinNegativeTest(LinkedList list)
+        {
+            Assert.Throws<Exception>(() => list.FindIndexOfMin());
+        }
         [TestCaseSource(typeof(SelectionSortTestSource))]
         public void SelectionSortTest(LinkedList list, LinkedList expected, bool descending)
         {
             list.SelectionSort(descending);
             Assert.AreEqual(expected, list);
+        }
+        [TestCaseSource(typeof(DeleteAndGetIndexFirstByValueTestSource))]
+        public void DeleteAndGetIndexFirstByValueSortTest(LinkedList list, LinkedList expected, int value, int result)
+        {
+            int actual = list.DeleteAndGetIndexFirstByValue(value);
+            Assert.AreEqual(expected, list);
+            Assert.AreEqual(actual, result);
+        }
+        [TestCaseSource(typeof(DeleteAllByValueTestSource))]
+        public void DeleteAllByValueValueSortTest(LinkedList list, LinkedList expected, int value)
+        {
+            list.DeleteAllByValue(value);
+            Assert.AreEqual(expected, list);
+        }
+        [TestCaseSource(typeof(AddToEndListTestSource))]
+        public void AddToEndListTest(LinkedList list, LinkedList actualList, LinkedList expected)
+        {
+            actualList.AddToEndList(list);
+            Assert.AreEqual(expected, actualList);
+        }
+        [TestCaseSource(typeof(AddToStartListTestSource))]
+        public void AddToStartListTest(LinkedList list, LinkedList actualList, LinkedList expected)
+        {
+            actualList.AddToStartList(list);
+            Assert.AreEqual(expected, actualList);
+
+        }
+        [TestCaseSource(typeof(AddByIndexListTestSource))]
+        public void AddByIndexListTest(LinkedList list, LinkedList actualList, LinkedList expected,int index)
+        {
+            actualList.AddByIndexList(list, index);
+            Assert.AreEqual(expected, actualList);
+
         }
     }
 }

@@ -395,8 +395,92 @@ namespace MyLinkedList
                 crnt = startNode.Next;
             }
         }
-      
-
+        public int DeleteAndGetIndexFirstByValue(int value)
+        {
+            int i = 0;
+            int result = -1;
+            Node crnt = _root;
+            while (i < Length)
+            {
+                if (value == GetNode(i).Value)
+                {
+                    if (i == 0)
+                    {
+                        _root = crnt.Next;
+                        break;
+                    }
+                    else
+                    {
+                        result = i;
+                        break;
+                    }
+                }
+                else
+                {
+                    i++;
+                }
+            }
+            GetNode(i - 1).Next = GetNode(i + 1);
+            return result;
+        }
+        public void DeleteAllByValue(int value)
+        {
+            int index = 0;
+            Node crnt = _root;
+            int count = 0;
+            while (crnt != null)
+            {
+                if (crnt.Value == value)
+                {
+                    if (index == 0)
+                    {
+                        _root = crnt.Next;
+                        count++;
+                        index--;
+                    }
+                    else
+                    {
+                        Node prev = GetNode(index - 1);
+                        prev.Next = crnt.Next;
+                        count++;
+                        index--;
+                    }
+                }
+                index++;
+                crnt = crnt.Next;
+            }
+        }
+        public void AddToEndList(LinkedList listSecond)
+        {
+            if (this == listSecond)
+            {
+                throw new ArgumentException("Cannot append itself to itself");
+            }
+            _tail.Next = listSecond._root;
+            _tail = listSecond._tail;
+        }
+        public void AddToStartList(LinkedList listSecond)
+        {
+            if (this == listSecond)
+            {
+                throw new ArgumentException("Cannot append itself to itself");
+            }
+            listSecond._tail.Next = _root;
+            _root= listSecond._root;
+        }
+        public void AddByIndexList(LinkedList listSecond, int index)
+        {
+            if (this == listSecond)
+            {
+                throw new ArgumentException("Cannot append itself to itself");
+            }
+            Node second = GetNode(index);
+            Node prev = GetNode(index - 1);
+            prev.Next = listSecond._root;
+            listSecond._tail=second;
+            ///не так работает
+          
+        }
         public override string ToString()
         {
             string str = "[ ";
